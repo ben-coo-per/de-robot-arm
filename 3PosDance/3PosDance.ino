@@ -17,16 +17,16 @@ int buttonPin = 20; // button's pin connection
 int btnState = 0; // Inititating the default setting of the button as being off, it hasn't been pushed down
 int previousBtnState = 0; // Inititating the default setting of the button as being off, it hasn't been pushed down
 
-int leftServoCurrentPosition;
-int rightServoCurrentPosition;
-int baseServoCurrentPosition;
-int clawServoCurrentPosition;
 
+// Left servo limits: 0 - 65
+// Right servo limits: 0 - 75
+// Base servo limits: 0 - 180
+// Claw servo limits: 80- 145
 
 // storing servo angles within a 4 column array to create each robot arm pose
-int pose1[4] = {30, 20, 90, 80}; 
-int pose2[4] = {25, 30, 180, 145}; 
-int pose3[4] = {0, 20, 0, 120};
+int pose1[4] = {60, 0, 90, 80}; 
+int pose2[4] = {25, 75, 180, 145}; 
+int pose3[4] = {0, 25, 0, 120};
 int currentPose = 0; // useful for the if statement to have a start point, start point should be position
 
 void setup() {
@@ -34,8 +34,8 @@ void setup() {
   pinMode(buttonPin, INPUT); // The push button's data cable is connected to D20 . 4 button types INPUT is 1, OUTPUT + PULLUP & PULLDOWN
 
   leftServo.attach(leftServoPin, 40); // left servo's pin connection 
-  baseServo.attach(rightServoPin, 30); // base servo's pin connection 
-  rightServo.attach(baseServoPin, 45); // right servo's pin connection 
+  rightServo.attach(rightServoPin, 30); // base servo's pin connection 
+  baseServo.attach(baseServoPin, 45); // right servo's pin connection 
   clawServo.attach(clawServoPin, 80); // claw servo's pin connection 
 }
 
@@ -48,7 +48,7 @@ void loop() {
     Serial.print(currentPose);
   }
   
-  // // leftServo control (non-blocking)
+  // leftServo control (non-blocking)
   int leftServoTargetPosition = getPosition(0);
   leftServo.setEasingType(EASE_CUBIC_IN_OUT);
   leftServo.easeTo(leftServoTargetPosition, speed);
